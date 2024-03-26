@@ -1,14 +1,46 @@
 
+input{
+    font-size: 15px;
+    padding: 3.5%;
+    /* padding-bottom: 30px;
+    margin-left: 50px; */
+    width: 110%;
+    
+    /* height: 10%; */
+}
 .login-input{
-    background-color: aqua;
-    padding: 5% 15% 15% 15%;
-    text-align: center;
+    border: 2px solid;
+    padding: 5% 15% 3% 15%;
+    /* text-align: center; */
     margin: 0 20% 0 15%;
+    transition: 10s;
   
+}
+.login-input:hover{
+    border: 5px solid;
+    background-color: aquamarine;
+    
 }
 .login-form{
     padding: 5%;
-    background-color: red;
     /* margin-top: 20%; */
 text-align: center;
+}
+.login-button{
+    border: 1px solid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 15px;
+    border-radius: 90%;
+    margin-top: 10%;
+    /* padding: 10px 120px 10px 120px; */
+    width: 60%;
+    /* height: 40%; */
+    padding: 2%;
+}
+.login{
+   margin-top: 5%;
+}
+
+.login-button:hover{
+background-color: antiquewhite;
 }
