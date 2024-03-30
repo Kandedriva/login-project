@@ -1,5 +1,5 @@
 
-input{
+.input-for-login{
     font-size: 15px;
     padding: 3.5%;
     /* padding-bottom: 30px;
@@ -43,4 +43,42 @@ text-align: center;
 
 .login-button:hover{
 background-color: antiquewhite;
+}
+.regitration-firstname{
+    
+    width: 40%;
+   padding-bottom: 20px;
+    display: inline-block;
+    /* background-color: aqua; */
+
+}
+.input-for-fullname{
+    margin: 5px;
+}
+#lastName{
+    margin: 2px;
+    display: inline-block;
+}
+.regitration-lastname{
+    width: 40%;
+    margin: 0 0 0 2%;
+    padding-bottom: 20px;
+    /* background-color: rosybrown; */
+    display: inline-block;
+}
+.register{
+    border: 2px solid;
+    text-align: center;
+    padding: 5% 10% 10% 10%;
+    margin: 10% 15% 0 15%;
+}
+.register-form{
+    padding: 5px;
+}
+.register-ep{
+    margin: 20px;
+}
+.input-for-registration{
+   padding: 3%;
+    width: 75%;
 }

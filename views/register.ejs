@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <form action="">
-            <div>
-                <label for="firtName">First name</label>
-                <input type="text" id="firtName">
+<%- include('header'); -%>
+       <div class="register">
+        <h1>Registration</h1>
+        <form action="" class="register-form">
+            <div class="regitration-firstname">
+                <label for="firtName">First name</label><br>
+                <input type="text" id="firtName" class="input-for-registration">
+                
             </div>
-            <div>
-                <label for="lastName">Last name</label>
-                <input type="text" id="lastName">
+            <div class="regitration-lastname">
+                <label for="lastName">Last name</label><br>
+                <input type="text" id="lastName" class="input-for-registration" >
+
             </div>
-            <div>
-                <label for="email">Email</label>
-                <input type="text" id="eamil">
+            
+            <div class="register-ep">
+                <label for="email" >Email</label><br>
+                <input type="text" id="eamil" class="input-for-registration">
             </div>
-            <div>
-                <label for="password">Create a password</label>
-                <input type="password" id="password">
+            <div class="register-ep">
+                <label for="password" >Create a password</label><br>
+                <input type="password" id="password" class="input-for-registration">
             </div>
             <button>Reagister</button>
         </form>
-    </div>
+       </div>
+    <!-- </div> -->
     
 </body>
 </html>
