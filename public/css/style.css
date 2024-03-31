@@ -69,7 +69,7 @@ background-color: antiquewhite;
 .register{
     border: 2px solid;
     text-align: center;
-    padding: 5% 10% 10% 10%;
+    padding: 3% 5%;
     margin: 10% 15% 0 15%;
 }
 .register-form{
@@ -81,4 +81,10 @@ background-color: antiquewhite;
 .input-for-registration{
    padding: 3%;
     width: 75%;
+}
+.register-button{
+    font-family: fantasy;
+    font-size: 20px;
+    padding: 2% 20%;
+    margin-top: 10px;
 }
