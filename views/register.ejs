@@ -2,25 +2,25 @@
 <%- include('header'); -%>
        <div class="register">
         <h1>Registration</h1>
-        <form action="" class="register-form">
+        <form action="/register" class="register-form" method="POST">
             <div class="regitration-firstname">
                 <label for="firtName">First name</label><br>
-                <input type="text" id="firtName" class="input-for-registration">
+                <input type="text" id="firtName" class="input-for-registration" name = "FName">
                 
             </div>
             <div class="regitration-lastname">
                 <label for="lastName">Last name</label><br>
-                <input type="text" id="lastName" class="input-for-registration" >
+                <input type="text" id="lastName" class="input-for-registration" name="LName">
 
             </div>
             
             <div class="register-ep">
                 <label for="email" >Email</label><br>
-                <input type="text" id="eamil" class="input-for-registration">
+                <input type="text" id="eamil" class="input-for-registration" name="email">
             </div>
             <div class="register-ep">
                 <label for="password" >Create a password</label><br>
-                <input type="password" id="password" class="input-for-registration">
+                <input type="password" id="password" class="input-for-registration" name="password">
             </div>
             <button class="register-button">Reagister</button>
         </form>
