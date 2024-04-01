@@ -1,17 +1,17 @@
     <%- include('header'); -%>
 <body>
     <div >
-        <form action="" class="login-form">
+        <form action="/login" class="login-form" method="POST">
             <div class="login-input">
                 <h1>Log in</h1>
                 <div class="login"> 
                     
                     <label for="email">email</label><br>
-                    <input type="text" id="email" size="50" width="50" class="input-for-login">
+                    <input type="text" id="email" size="50" width="50" class="input-for-login" name="loginEmail">
                 </div>
                 <div class="login">
                     <label for="password">password</label><br>
-                    <input type="password" id="password" size="50" width="50" class="input-for-login">
+                    <input type="password" id="password" size="50" width="50" class="input-for-login" name="loginPassword">
                 </div>
                 <button class="login-button">Login</button>
             </div>

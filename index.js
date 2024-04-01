@@ -20,9 +20,36 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'));
 
-app.get("/", (req, res)=>{
+app.get("/login", (req, res)=>{
     res.render("login.ejs")
 });
+app.post("/login", async(req, res)=>{
+    const loginEmail = req.body.loginEmail;
+    const loinPassword = req.body.loginPassword;
+
+    try{
+        const result = await db.query("SELECT * FROM users WHERE email = $1",[
+            loginEmail,
+        ]);
+        if(result.rows.length > 0){
+            const user = result.rows[0];
+            const storedpassword = user.password;
+
+            if(loinPassword === storedpassword){
+                res.send("Greae You're good to go..!")
+            }else{
+                res.send("Incorrect Email or Password, please try it again..!")
+            }
+
+        }else{
+            res.send("User not find..!")
+        }
+    }catch (err){
+        console.log(err)
+
+    }
+   
+})
 
 
 app.get("/register", (req, res)=>{
@@ -55,6 +82,7 @@ app.post("/register", async(req, res)=>{
 
     }
 })
+
 
 
 
