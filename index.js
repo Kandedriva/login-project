@@ -7,17 +7,19 @@ import path from "path";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import env  from "dotenv";
  
 const port = 3000
 const app = express();
 const saltRounds = 10;
+env.config();
 
 const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "users",
-    password: "Dkkande",
-    port: 5432
+    user: process.env.DATA_BASE_USER,
+    host: process.env.DATA_BASE_HOST,
+    database: process.env.DATA_BASE_NAME,
+    password: process.env.DATA_BASE_PASSWORD,
+    port: process.env.DATA_BASE_PORT
 })
 db.connect();
 
@@ -26,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'));
 //use Session for cookies
 app.use(session({
-    secret: "THESECRETWORD",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -75,9 +77,10 @@ app.post("/register", async(req, res)=>{
                 if(err){
                     console.log(err)
                 }else{
-                const result = await db.query("INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4)", 
+                const result = await db.query("INSERT INTO users (email, firstname, lastname, password) VALUES ($1, $2, $3, $4) RETURNING *", 
             [email, firstname, lastname, hash]
             );
+            const user = result.rows[0]
             console.log(result);
             res.render("login.ejs")
                 }
