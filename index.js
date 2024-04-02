@@ -4,6 +4,9 @@ import bodyParser from "body-parser";
 import bcrypt from "bcrypt"
 import pg from "pg"
 import path from "path";
+import session from "express-session";
+import passport from "passport";
+import { Strategy } from "passport-local";
  
 const port = 3000
 const app = express();
@@ -21,6 +24,17 @@ db.connect();
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'));
+//use Session for cookies
+app.use(session({
+    secret: "THESECRETWORD",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 48,
+    },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/login", (req, res)=>{
     res.render("login.ejs")
@@ -31,6 +45,16 @@ app.get("/login", (req, res)=>{
 app.get("/register", (req, res)=>{
     res.render("register.ejs")
 });
+
+app.get("/home", (req, res)=>{
+    if(req.isAuthenticated()){
+        res.render("home.ejs")
+    }else{
+        res.redirect("/login")
+    }
+
+})
+
 app.post("/register", async(req, res)=>{
     const firstname = req.body.FName;
     const lastname = req.body.LName;
@@ -69,44 +93,53 @@ app.post("/register", async(req, res)=>{
     }
 });
 
-app.post("/login", async(req, res)=>{
-    const email = req.body.loginEmail;
-    const loginPassword = req.body.loginPassword;
+app.post("/login", passport.authenticate("local",{
+    successRedirect: "/home",
+    failureRedirect: "/login"
+}));
+
+passport.use(new Strategy(async function verify(username, password, cb){
 
     try{
         const result = await db.query("SELECT * FROM users WHERE email = $1",[
-            email,
+            username,
         ]);
         console.log(result.rows)
         if(result.rows.length > 0){
             const user = result.rows[0];
             const storedpassword = user.password;
 
-            bcrypt.compare(loginPassword, storedpassword, (err, result)=>{
+            bcrypt.compare(password, storedpassword, (err, result)=>{
                 if(err){
-                    console.log(err)
+                 return cb(err)
                 }else{
                     if(result){
-                        console.log(result)
-                        res.send("Greae You're good to go..!")
+                        return cb(null, user)
+                        // console.log(result)
+                        // res.send("Greae You're good to go..!")
                     }else{
-                        res.send("Incorrect Email or Password, please try it again..!")
+                        return cb(null, false)
+                        // res.send("Incorrect Email or Password, please try it again..!")
 
                     }
                 }
             })
 
         }else{
-            res.send("User not find..!")
+            return cb("User not find..!")
         }
     }catch (err){
-        console.log(err)
+        return cb(err)
 
     }
-   
+}));
+
+passport.serializeUser((user, cb)=>{
+    cb(null, user)
 })
-
-
+passport.deserializeUser((user, cb)=>{
+    cb(null, user)
+})
 
 
 app.listen(port, ()=>{
