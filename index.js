@@ -57,6 +57,10 @@ app.get("/home", (req, res)=>{
 
 })
 
+app.get("/", (req, res)=>{
+    res.render("product.ejs")
+})
+
 app.post("/register", async(req, res)=>{
     const firstname = req.body.FName;
     const lastname = req.body.LName;
