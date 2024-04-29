@@ -7,6 +7,7 @@ import path from "path";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import GoogleStrategy from "passport-google-oauth20"
 import env  from "dotenv";
  
 const port = 3000
@@ -59,6 +60,17 @@ app.get("/home", (req, res)=>{
 
 app.get("/", (req, res)=>{
     res.render("product.ejs")
+});
+app.get("/auth/google", passport.authenticate("google", {
+    scope: ["profile", "email"]
+}));
+
+app.get("/logout", (req, res)=>{
+    req.logout((err)=>{
+        if(err) console.log(err)
+        res.redirect("/login")
+    })
+
 })
 
 app.post("/register", async(req, res)=>{
@@ -105,7 +117,7 @@ app.post("/login", passport.authenticate("local",{
     failureRedirect: "/login"
 }));
 
-passport.use(new Strategy(async function verify(username, password, cb){
+passport.use("local", new Strategy(async function verify(username, password, cb){
 
     try{
         const result = await db.query("SELECT * FROM users WHERE email = $1",[
@@ -140,6 +152,15 @@ passport.use(new Strategy(async function verify(username, password, cb){
 
     }
 }));
+
+passport.use("google", new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callBackUrl: "http://localhost:3000/auth/google/home",
+    // userProfileUrl: "https://www.googleapis.com/oauth2/v3/userinfo"
+}, async(accessToken, refreshToken, profile, cb)=>{
+    console.log(profile);
+}))
 
 passport.serializeUser((user, cb)=>{
     cb(null, user)
